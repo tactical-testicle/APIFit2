@@ -1,4 +1,3 @@
-package APIFIT;
 
 export default interface IUser{
     name?: string;
@@ -8,4 +7,5 @@ export default interface IUser{
     role?: string;
     addres?: string;
     description?: string;
+    
 }

@@ -1,0 +1,33 @@
+
+api:
+  identifier: APPFit
+  port: 5001
+
+logger:
+  options:
+    level: trace
+
+mongodb:
+  url: 'mongodb://localhost:27017'
+  database: 'appFit'
+  schema: mongodb
+  hostname: 127.0.0.1
+  port: 27017
+  timeout: '5000'
+  oprions:
+    dbName: 'appFit'
+    useUnifiedTopology: true
+    useNewUrlParser: true
+
+crypto:
+  auth_secret: 
+  auth_ttl: 86400 * 1000
+  auth_algorithm: 'aes256'
+  auth_inputEncoding: 'utf8'
+  auth_outputEncoding: 'hex'
+
+jwt:
+  accessTokenSecret: ''
+  refreshTokenSecret: ''
+  accessTokenLife: '30d'
+  refreshTokenLife: 2592000
