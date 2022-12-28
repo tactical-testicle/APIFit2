@@ -4,6 +4,7 @@ import cors from 'cors';
 import express from 'express';
 
 ////////////// IMPORTAR RUTAS
+import UserRoutes from './routes/user.routes';
 
 
 const server = Server.instance;
@@ -18,7 +19,7 @@ server.app.use(cors({ origin: true, credentials: true}));
 
 
 ////////////////////// PATHS /////////////////////////////
-
+server.app.use('/user', UserRoutes)
 
 ///////////////////// CONNECTIONS STABILISHED///////////////
 mongo.connectDB()
