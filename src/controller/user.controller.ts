@@ -18,4 +18,13 @@ export default class UserControllers {
     }
 
     /////////////////////////// END GETS ////////////////////////////
+
+/////////////////////////// POST ////////////////////////////
+    public async createUsers(usuario: IUser): Promise<IResponse>{
+        return new Promise( ( resolve, reject ) => {
+            User.create({User})
+            return resolve({ok: true, message: 'Usuario creado', response: User, code:200})            
+        })
+}
+/////////////////////////// END POST ////////////////////////////
 }

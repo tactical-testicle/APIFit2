@@ -4,6 +4,7 @@ import { verificaJWT } from '../middleware/authJwt';
 
 import IUser from '../interfaces/IUser';
 import UserControllers from '../controller/user.controller';
+import User from '../modelos/User';
 
 
 const UserRoutes = Router();
@@ -23,7 +24,14 @@ UserRoutes.get('/todos',async ( req: Request, res: Response ) => {
 /////////////////////////// END GETS ////////////////////////////
 
 /////////////////////////// POST ////////////////////////////
-
+UserRoutes.post('/crearUsuario',async ( req: Request, res: Response ) => {
+    try{
+        const response = await userService.createUsers(User);
+        return res.status(response.code).json( response );
+    }catch(err: any){
+        return res.status( err.code ? err.code : 500).json( err );
+    }
+})
 
 /////////////////////////// END POST ////////////////////////////
 
