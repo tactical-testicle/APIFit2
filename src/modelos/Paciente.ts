@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     enfermedad: {type: String, required: true},
     genero: {type: String, required: true},
     sexualidad: {type: String, required: true},
+    nivelActividad: {type: Number, required: true}
 }, {collection: 'pacientes'})
 
 export default mongoose.model('Paciente', userSchema);
