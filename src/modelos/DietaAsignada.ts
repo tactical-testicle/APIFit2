@@ -1,8 +1,8 @@
 import mongoose, {Schema} from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-    idUserTrainer: {type: Number, required: true},
-    idUserPaciente: {type: Number, required: true},
+    idUserTrainer: {type: Schema.Types.ObjectId, ref: 'Trainer', required: true},
+    idUserPaciente: {type: Schema.Types.ObjectId, ref: 'Paciente', required: true},
     fechaCreacion: {type: Date, required: true},
     vigencia: {type: Boolean, required: true},
     calorias: {type: Number, required: true},    

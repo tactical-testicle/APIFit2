@@ -1,8 +1,8 @@
 import mongoose, {Schema} from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-    idUserTrainer: {type: Number, required: true},
-    idUserPaciente: {type: Number, required: true},
+    idUserTrainer: {type: Schema.Types.ObjectId, ref: 'Trainer', required: true},
+    idUserPaciente: {type: Schema.Types.ObjectId, ref: 'Paciente', required: true},
     fecha: {type: Date, required: true, unique: true}
 }, {collection: 'agendas'})
 
