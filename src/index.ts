@@ -1,26 +1,27 @@
-import Server from './class/server.class';
-import MongoConn from '../lib/mongodb';
-import cors from 'cors';
-import express from 'express';
+import Server from './class/server.class'
+import MongoCon from '../lib/mongodb'
+import cors from 'cors'
+import express from 'express'
+import UserRoutes from './routes/user.router'
 
-////////////// IMPORTAR RUTAS
-import UserRoutes from './routes/user.routes';
+////////////////////////////////////END WS CONFIG ////////////////////////////////////////////
+const server = Server.instance
+const mongo = MongoCon.instance
 
 
-const server = Server.instance;
-const mongo = MongoConn.instance;
 
-server.app.enable('trusty proxy');
+server.app.enable('trusty proxy')
 
-server.app.use(express.urlencoded({ extended: true }));
+server.app.use(express.urlencoded({extended: true}))
 server.app.use(express.json())
 
-server.app.use(cors({ origin: true, credentials: true}));
+server.app.use(cors({origin: true, credentials: true}))
 
-
-////////////////////// PATHS /////////////////////////////
+///////////////////////////////////PATHs////////////////////////////////////////////////////////
 server.app.use('/user', UserRoutes)
 
-///////////////////// CONNECTIONS STABILISHED///////////////
 mongo.connectDB()
+
+
 server.start()
+

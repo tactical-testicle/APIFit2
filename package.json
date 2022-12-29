@@ -1,7 +1,7 @@
 {
-  "name": "apifit",
-  "version": "1.0.0",
-  "description": "apliacion para instructores",
+  "name": "career_office_db",
+  "version": "0.0.1",
+  "description": "Backend for career office's app",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,25 +10,39 @@
     "build": "rimraf ./build && tsc --build",
     "start": "npm run build && node build/src/index.js | npx pino-pretty -t SYS:yyyy-mm-dd,HH:MM:ss"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TetriDev/oficios-backend.git"
+  },
+  "author": "Ilikei",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TetriDev/oficios-backend/issues"
+  },
+  "homepage": "https://github.com/TetriDev/oficios-backend#readme",
   "dependencies": {
-    "axios": "^1.2.1",
+    "axios": "^1.2.0",
     "config": "^3.3.8",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "express-pino-logger": "^7.0.0",
     "js-yaml": "^4.1.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.3",
-    "pino": "^8.8.0",
+    "pino": "^8.7.0",
     "pino-pretty": "^9.1.1",
     "rimraf": "^3.0.2",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.3",
+    "ws": "^8.11.0"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/config": "^3.3.0",
-    "@types/cors": "^2.8.13",
-    "@types/express": "^4.17.15",
-    "@types/jsonwebtoken": "^9.0.0"
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.14",
+    "@types/jsonwebtoken": "^8.5.9",
+    "@types/mongoose": "^5.11.97",
+    "@types/pino": "^7.0.5",
+    "@types/ws": "^8.5.3"
   }
 }

@@ -1,0 +1,3 @@
+{"level":30,"time":1671508507230,"pid":2892,"hostname":"DESKTOP-SPQD99C","msg":"Server run in port number 5010"}
+{"level":30,"time":1671508507243,"pid":2892,"hostname":"DESKTOP-SPQD99C","msg":"mongodb://localhost:27017"}
+{"level":30,"time":1671508507243,"pid":2892,"hostname":"DESKTOP-SPQD99C","msg":"Connected to the database "}

@@ -8,17 +8,6 @@ const mongodb_1 = __importDefault(require("../lib/mongodb"));
 const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
 const user_router_1 = __importDefault(require("./routes/user.router"));
-/////////////////////////////////////////// DEFINE WEB SOCKET SERVER ///////////////////////////////////////////////////////////
-const ws_1 = require("ws");
-const port = 1234;
-const wss = new ws_1.WebSocketServer({ port });
-wss.on('connection', (ws) => {
-    ws.on('message', (data) => {
-        console.log(`Received message from client: ${data}`);
-    });
-    ws.send('hello, this is test');
-});
-console.log(`Listening at ${port}...`);
 ////////////////////////////////////END WS CONFIG ////////////////////////////////////////////
 const server = server_class_1.default.instance;
 const mongo = mongodb_1.default.instance;
