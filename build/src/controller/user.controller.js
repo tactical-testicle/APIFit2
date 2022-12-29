@@ -27,5 +27,15 @@ class UserControllers {
             });
         });
     }
+    /////////////////////////// END GETS ////////////////////////////
+    /////////////////////////// POST ////////////////////////////
+    createUsers(usuario) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                User_1.default.create({ User: User_1.default });
+                return resolve({ ok: true, message: 'Usuario creado', response: User_1.default, code: 200 });
+            });
+        });
+    }
 }
 exports.default = UserControllers;

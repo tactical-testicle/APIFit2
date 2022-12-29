@@ -15,9 +15,6 @@ mongodb:
   port: '27017'
   timeout: '5000'
   options:
-   user: 'adminuser'
-    pass: 'password123'
-    authSource: 'admin'
     dbName: 'appFit'
     useUnifiedTopology: true
     useNewUrlParser: true
