@@ -4,7 +4,6 @@ import cors from 'cors'
 import express from 'express'
 import UserRoutes from './routes/user.router'
 
-////////////////////////////////////END WS CONFIG ////////////////////////////////////////////
 const server = Server.instance
 const mongo = MongoCon.instance
 
