@@ -25,11 +25,14 @@ UserRoutes.get('/todos',async ( req: Request, res: Response ) => {
 
 /////////////////////////// POST ////////////////////////////
 UserRoutes.post('/crearUser',async(req: Request, res: Response) => {
-    const body = req.body
-    return res.status(200).json({
-        ok: true,
-        body
-        })
+    try{
+        const body = req.body
+        const response = await userService.createUsers(body);
+        return res.status(response.code).json( response );
+    }catch(err: any){
+        return res.status( err.code ? err.code : 500).json( err );
+    }
+
     })
 
 /////////////////////////// END POST ////////////////////////////

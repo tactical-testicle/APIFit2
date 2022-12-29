@@ -29,11 +29,14 @@ UserRoutes.get('/todos', (req, res) => __awaiter(void 0, void 0, void 0, functio
 /////////////////////////// END GETS ////////////////////////////
 /////////////////////////// POST ////////////////////////////
 UserRoutes.post('/crearUser', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const body = req.body;
-    return res.status(200).json({
-        ok: true,
-        body
-    });
+    try {
+        const body = req.body;
+        const response = yield userService.createUsers(body);
+        return res.status(response.code).json(response);
+    }
+    catch (err) {
+        return res.status(err.code ? err.code : 500).json(err);
+    }
 }));
 /////////////////////////// END POST ////////////////////////////
 /////////////////////////// PUTS ////////////////////////////
