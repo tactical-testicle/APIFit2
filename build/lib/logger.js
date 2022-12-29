@@ -5,9 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const pino_1 = __importDefault(require("pino"));
 const config_1 = __importDefault(require("config"));
-const stream = [
-    { stream: process.stdout }
+const streams = [
+    { stream: process.stdout },
+    //{stream: pino.destination(`./logs/${config.get('api.identifier')}-${Date.now()}.log`)}
 ];
 const options = (config_1.default.has('logger.options')) ? Object.assign({}, config_1.default.get('logger.options')) : {};
-let logger = (0, pino_1.default)(options, pino_1.default.multistream(stream));
+let logger = (0, pino_1.default)(options, pino_1.default.multistream(streams));
 exports.default = logger;

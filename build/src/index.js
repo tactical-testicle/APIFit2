@@ -7,16 +7,26 @@ const server_class_1 = __importDefault(require("./class/server.class"));
 const mongodb_1 = __importDefault(require("../lib/mongodb"));
 const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
-////////////// IMPORTAR RUTAS
-const user_routes_1 = __importDefault(require("./routes/user.routes"));
+const user_router_1 = __importDefault(require("./routes/user.router"));
+/////////////////////////////////////////// DEFINE WEB SOCKET SERVER ///////////////////////////////////////////////////////////
+const ws_1 = require("ws");
+const port = 1234;
+const wss = new ws_1.WebSocketServer({ port });
+wss.on('connection', (ws) => {
+    ws.on('message', (data) => {
+        console.log(`Received message from client: ${data}`);
+    });
+    ws.send('hello, this is test');
+});
+console.log(`Listening at ${port}...`);
+////////////////////////////////////END WS CONFIG ////////////////////////////////////////////
 const server = server_class_1.default.instance;
 const mongo = mongodb_1.default.instance;
 server.app.enable('trusty proxy');
 server.app.use(express_1.default.urlencoded({ extended: true }));
 server.app.use(express_1.default.json());
 server.app.use((0, cors_1.default)({ origin: true, credentials: true }));
-////////////////////// PATHS /////////////////////////////
-server.app.use('/user', user_routes_1.default);
-///////////////////// CONNECTIONS STABILISHED///////////////
+///////////////////////////////////PATHs////////////////////////////////////////////////////////
+server.app.use('/user', user_router_1.default);
 mongo.connectDB();
 server.start();

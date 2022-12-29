@@ -23,7 +23,7 @@ class Server {
         this.httpServer = new http_1.default.Server(this.app);
     }
     static get instance() {
-        return this._instance || (this._instance = new this);
+        return this._instance || (this._instance = new this());
     }
     start() {
         return __awaiter(this, void 0, void 0, function* () {
