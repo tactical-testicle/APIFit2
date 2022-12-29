@@ -20,9 +20,9 @@ class UserControllers {
             return new Promise((resolve, reject) => {
                 User_1.default.find({}, null, (err, userFinded) => {
                     if (err) {
-                        return reject({ ok: false, message: 'Error en base de dato', reponse: null, code: 500 });
+                        return reject({ ok: false, message: 'Error ', reponse: null, code: 500 });
                     }
-                    return resolve({ ok: true, message: 'Lista de usuarios encontrados', response: userFinded, code: 200 });
+                    return resolve({ ok: true, message: 'Users list', response: userFinded, code: 200 });
                 });
             });
         });
@@ -32,8 +32,15 @@ class UserControllers {
     createUsers(usuario) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
-                User_1.default.create({ User: User_1.default });
-                return resolve({ ok: true, message: 'Usuario creado', response: User_1.default, code: 200 });
+                if (!usuario) {
+                    return reject({ ok: false, message: "incorrect data", response: null, code: 400 });
+                }
+                User_1.default.create({ usuario }, (err, createUser) => {
+                    if (err) {
+                        return reject({ ok: false, message: "Error", response: null, code: 500 });
+                    }
+                    return resolve({ ok: true, message: 'User created', response: createUser, code: 200 });
+                });
             });
         });
     }

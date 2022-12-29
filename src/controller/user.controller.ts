@@ -10,9 +10,9 @@ export default class UserControllers {
         return new Promise( ( resolve, reject ) => {
             User.find({}, null, (err: any, userFinded: any ) => {
                 if( err ){
-                    return reject({ ok: false, message: 'Error en base de dato', reponse: null, code: 500 });
+                    return reject({ ok: false, message: 'Error ', reponse: null, code: 500 });
                 }
-                return resolve({ok: true, message: 'Lista de usuarios encontrados', response: userFinded, code:200})
+                return resolve({ok: true, message: 'Users list', response: userFinded, code:200})
             })
         })
     }
@@ -22,8 +22,15 @@ export default class UserControllers {
 /////////////////////////// POST ////////////////////////////
     public async createUsers(usuario: IUser): Promise<IResponse>{
         return new Promise( ( resolve, reject ) => {
-            User.create({User})
-            return resolve({ok: true, message: 'Usuario creado', response: User, code:200})            
+            if(!usuario){
+                return reject({ok: false, message:"incorrect data", response: null, code: 400})
+            }
+            User.create({usuario}, (err: any, createUser: any) => {
+                if( err ){
+                    return reject({ok: false, message:"Error", response: null, code: 500})
+                }
+                return resolve({ok: true, message: 'User created', response: createUser, code:200})            
+            })
         })
 }
 /////////////////////////// END POST ////////////////////////////

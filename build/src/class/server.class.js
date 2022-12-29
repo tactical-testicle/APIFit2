@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const http_1 = __importDefault(require("http"));
 const config_1 = __importDefault(require("config"));
 const express_1 = __importDefault(require("express"));
+const logger_1 = __importDefault(require("../../lib/logger"));
 class Server {
     constructor() {
         this.port = config_1.default.get('api.port');
@@ -28,10 +29,10 @@ class Server {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.httpServer.listen(this.port);
-                console.log(`Server corriendo en el puerto ${this.port}`);
+                logger_1.default.info(`Server run in port number ${this.port}`);
             }
-            catch (error) {
-                console.log(error);
+            catch (err) {
+                logger_1.default.error(err);
             }
         });
     }

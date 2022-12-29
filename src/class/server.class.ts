@@ -1,6 +1,7 @@
 import http from 'http';
 import config from 'config';
 import express from 'express';
+import logger from '../../lib/logger';
 
 
 export default class Server {
@@ -22,9 +23,9 @@ export default class Server {
     async start() {
         try{
             await this.httpServer.listen( this.port )
-            console.log(`Server corriendo en el puerto ${this.port}`);
-        }catch(error){
-            console.log(error)
+            logger.info(`Server run in port number ${this.port}`)
+        }catch(err){
+            logger.error(err)
         }
     }
 

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import config from 'config';
+import logger from './logger';
 
 export default class MongoConn {
     mongoConn: mongoose.Connection;
@@ -20,13 +21,14 @@ export default class MongoConn {
     public async connectDB() {
         mongoose.connect(
             `mongodb://${config.get('mongodb.hostname')}:${config.get('mongodb.port')}`,
+            config.get('mongodb.options'),
             (err) => {
                 if( err ){
-                    // logger.error(err)
-                    console.log(err)
+                    logger.error(err)
                     return
                 }
-                console.log(`Conectado a BD ${config.get('mongodb.database')}`)
+                logger.info(config.get('mongodb.url'))
+                logger.info(`Connected to the database ${config.get('mongodb.database')}`)
             }
         )
     }
