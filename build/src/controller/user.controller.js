@@ -38,6 +38,26 @@ class UserController {
             });
         });
     }
+    ////////////////////////////////////////FIN POST /////////////////////////////////////////
+    ////////////////////////////////////////// Modificar Usuario /////////////////////////
+    updateUser(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                if (!user) {
+                    logger_1.default.error('user no modified');
+                    return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
+                }
+                user_model_1.default.updateOne(user, (err, userModified) => {
+                    if (err) {
+                        logger_1.default.error(err);
+                        return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+                    }
+                    logger_1.default.info('Usuario modified succesfuly');
+                    return resolve({ ok: true, message: 'User modified', response: userModified, code: 200 });
+                });
+            });
+        });
+    }
 }
 exports.default = UserController;
 ;

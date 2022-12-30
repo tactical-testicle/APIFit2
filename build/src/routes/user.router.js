@@ -30,7 +30,7 @@ UserRoutes.get('/user/ping', (req, res) => __awaiter(void 0, void 0, void 0, fun
 }));
 ///////////////////////////////POSTS//////////////////////////////////////
 ///////////////////////////////CREAR USUARIO
-UserRoutes.post('/user/createUser', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+UserRoutes.post('/createUser', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userBody = req.body;
     try {
         const response = yield userService.createUser(userBody);
@@ -41,4 +41,16 @@ UserRoutes.post('/user/createUser', (req, res) => __awaiter(void 0, void 0, void
     }
 }));
 //////////////////////////////////FIN POST /////////////////////////////////////
+///////////////////////////////PUTS//////////////////////////////////////
+///////////////////////////////MODIFICAR USUARIO
+UserRoutes.put('/updateUser', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userBody = req.body;
+    try {
+        const response = yield userService.updateUser(userBody);
+        return res.status(response.code).json(response);
+    }
+    catch (err) {
+        return res.status(err.code ? err.code : 500).json(err);
+    }
+}));
 exports.default = UserRoutes;

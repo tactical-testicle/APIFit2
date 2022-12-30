@@ -1,6 +1,6 @@
 import {Router, Request, Response} from 'express';
 
-import { verificaJWT } from '../middleware/authjwt';
+
 
 import logger from '../../lib/logger'
 
@@ -27,7 +27,7 @@ const userService = new UserController
     });
     ///////////////////////////////POSTS//////////////////////////////////////
             ///////////////////////////////CREAR USUARIO
-    UserRoutes.post('/user/createUser', async ( req: Request, res: Response ) => {
+    UserRoutes.post('/createUser', async ( req: Request, res: Response ) => {
 
         const userBody: IUser = req.body;
         
@@ -42,8 +42,25 @@ const userService = new UserController
             return res.status( err.code? err.code: 500).json(err);
 
         }
-    });
+    });    
 //////////////////////////////////FIN POST /////////////////////////////////////
+///////////////////////////////PUTS//////////////////////////////////////
+            ///////////////////////////////MODIFICAR USUARIO
+UserRoutes.put('/updateUser', async ( req: Request, res: Response ) => {
+
+    const userBody: IUser = req.body;
     
+    try{
+
+        const response = await userService.updateUser(userBody);
+
+        return res.status( response.code ).json( response );
+
+    }catch( err: any ){
+
+        return res.status( err.code? err.code: 500).json(err);
+
+    }
+});
 
 export default UserRoutes

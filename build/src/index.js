@@ -8,7 +8,6 @@ const mongodb_1 = __importDefault(require("../lib/mongodb"));
 const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
 const user_router_1 = __importDefault(require("./routes/user.router"));
-////////////////////////////////////END WS CONFIG ////////////////////////////////////////////
 const server = server_class_1.default.instance;
 const mongo = mongodb_1.default.instance;
 server.app.enable('trusty proxy');

@@ -30,6 +30,24 @@ export default class UserController {
         });
     }
     ////////////////////////////////////////FIN POST /////////////////////////////////////////
+
+    ////////////////////////////////////////// Modificar Usuario /////////////////////////
+    public async updateUser ( user: IUser): Promise<IResponse>{
+        return new Promise(( resolve, reject ) =>{
+            if( !user ) {
+                logger.error('user no modified');
+                return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
+            }
+            User.updateOne( user, ( err: any, userModified: any ) => {
+                if( err ){
+                    logger.error ( err );
+                    return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+                }
+                logger.info('Usuario modified succesfuly');
+                return resolve({ ok: true, message: 'User modified', response: userModified, code: 200 });
+            });
+        });
+    }
     
 };
 
