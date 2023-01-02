@@ -25,6 +25,22 @@ const userService = new UserController
         res.status(200).json('/pong');
     
     });
+
+    UserRoutes.get('/locatedId/:id', async (req: Request, res: Response) => {
+        let id = req.params.id;
+        try{
+
+            const response = await userService.consultaIdUser(id);
+
+            return res.status( response.code ).json( response );
+
+        }catch( err: any ){
+
+            return res.status( err.code? err.code: 500).json(err);
+
+        }
+    
+    });
     ///////////////////////////////POSTS//////////////////////////////////////
             ///////////////////////////////CREAR USUARIO
     UserRoutes.post('/createUser', async ( req: Request, res: Response ) => {

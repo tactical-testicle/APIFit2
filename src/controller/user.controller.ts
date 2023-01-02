@@ -10,6 +10,24 @@ import User from '../models/user.model'
 /////////////////////////////////////////
 
 export default class UserController {
+///////////////////////////////////////////GETS////////////////////////////////////
+    
+    public async consultaIdUser ( id: string): Promise<IResponse>{
+        return new Promise(( resolve, reject ) =>{
+            if( !id ) {
+                logger.error('user no located');
+                return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
+            }
+            User.findById( id, ( err: any, userLocated: any ) => {
+                if( err ){
+                    logger.error ( err );
+                    return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+                }
+                logger.info('Usuario located succesfuly');
+                return resolve({ ok: true, message: 'User located', response: userLocated, code: 200 });
+            });
+        });
+    }
 ///////////////////////////////////////////POST////////////////////////////////////
    
     ////////////////////////////////////////// Crear Usuario /////////////////////////

@@ -18,6 +18,25 @@ const logger_1 = __importDefault(require("../../lib/logger"));
 const user_model_1 = __importDefault(require("../models/user.model"));
 /////////////////////////////////////////
 class UserController {
+    ///////////////////////////////////////////GETS////////////////////////////////////
+    consultaIdUser(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                if (!id) {
+                    logger_1.default.error('user no located');
+                    return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
+                }
+                user_model_1.default.findById(id, (err, userLocated) => {
+                    if (err) {
+                        logger_1.default.error(err);
+                        return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+                    }
+                    logger_1.default.info('Usuario located succesfuly');
+                    return resolve({ ok: true, message: 'User located', response: userLocated, code: 200 });
+                });
+            });
+        });
+    }
     ///////////////////////////////////////////POST////////////////////////////////////
     ////////////////////////////////////////// Crear Usuario /////////////////////////
     createUser(user) {
