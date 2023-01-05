@@ -86,16 +86,17 @@ class UserController {
                     logger_1.default.error('user no deleted');
                     return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
                 }
-                const user = this.consultaIdUser(id);
-                console.log("2" + user.vigente);
-                user.vigente = (user.vigente == true) ? false : true;
-                user_model_1.default.updateOne({ _id: user.id }, (err, userDeleted) => {
-                    if (err) {
-                        logger_1.default.error(err);
-                        return reject({ ok: false, message: 'Error ', response: null, code: 500 });
-                    }
-                    logger_1.default.info('Usuario logical deleted succesfuly');
-                    return resolve({ ok: true, message: 'User logical deleted ', response: userDeleted, code: 200 });
+                this.consultaIdUser(id).then((response) => {
+                    const user = response.response;
+                    user.vigente = (user.vigente == true) ? false : true;
+                    user_model_1.default.updateOne({ _id: id }, { vigente: user.vigente }, (err, userDeleted) => {
+                        if (err) {
+                            logger_1.default.error(err);
+                            return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+                        }
+                        logger_1.default.info('Usuario logical deleted succesfuly');
+                        return resolve({ ok: true, message: 'User logical deleted ', response: userDeleted, code: 200 });
+                    });
                 });
             });
         });
