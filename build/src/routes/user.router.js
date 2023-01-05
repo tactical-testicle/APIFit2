@@ -63,4 +63,16 @@ UserRoutes.put('/updateUser', (req, res) => __awaiter(void 0, void 0, void 0, fu
         return res.status(err.code ? err.code : 500).json(err);
     }
 }));
+///////////////////////////////BORRADO LOGICO USUARIO
+UserRoutes.put('/deleteUser/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let id = req.params.id;
+    console.log(id);
+    try {
+        const response = yield userService.deleteUser(id);
+        return res.status(response.code).json(response);
+    }
+    catch (err) {
+        return res.status(err.code ? err.code : 500).json(err);
+    }
+}));
 exports.default = UserRoutes;

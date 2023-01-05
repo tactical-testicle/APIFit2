@@ -8,4 +8,5 @@ export default interface IUser {
     role?: string
     addres?: string
     descripction?:string
+    vigente?:Boolean
 }

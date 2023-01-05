@@ -78,5 +78,21 @@ UserRoutes.put('/updateUser', async ( req: Request, res: Response ) => {
 
     }
 });
+           ///////////////////////////////BORRADO LOGICO USUARIO
+           UserRoutes.put('/deleteUser/:id', async ( req: Request, res: Response ) => {
+            let id = req.params.id;            
+            console.log(id);
+            try{
+        
+                const response = await userService.deleteUser(id);
+        
+                return res.status( response.code ).json( response );
+        
+            }catch( err: any ){
+        
+                return res.status( err.code? err.code: 500).json(err);
+        
+            }
+        });
 
 export default UserRoutes

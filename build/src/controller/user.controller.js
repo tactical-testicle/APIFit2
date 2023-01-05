@@ -19,6 +19,7 @@ const user_model_1 = __importDefault(require("../models/user.model"));
 /////////////////////////////////////////
 class UserController {
     ///////////////////////////////////////////GETS////////////////////////////////////
+    ////////////////////////////////////////// Consultar Usuario por Id/////////////////////////
     consultaIdUser(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
@@ -73,6 +74,28 @@ class UserController {
                     }
                     logger_1.default.info('Usuario modified succesfuly');
                     return resolve({ ok: true, message: 'User modified', response: userModified, code: 200 });
+                });
+            });
+        });
+    }
+    ////////////////////////////////////////// Delete logico Usuario /////////////////////////
+    deleteUser(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                if (!id) {
+                    logger_1.default.error('user no deleted');
+                    return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
+                }
+                const user = this.consultaIdUser(id);
+                console.log("2" + user.vigente);
+                user.vigente = (user.vigente == true) ? false : true;
+                user_model_1.default.updateOne({ _id: user.id }, (err, userDeleted) => {
+                    if (err) {
+                        logger_1.default.error(err);
+                        return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+                    }
+                    logger_1.default.info('Usuario logical deleted succesfuly');
+                    return resolve({ ok: true, message: 'User logical deleted ', response: userDeleted, code: 200 });
                 });
             });
         });

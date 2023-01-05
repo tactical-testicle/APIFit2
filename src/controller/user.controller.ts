@@ -11,7 +11,7 @@ import User from '../models/user.model'
 
 export default class UserController {
 ///////////////////////////////////////////GETS////////////////////////////////////
-    
+    ////////////////////////////////////////// Consultar Usuario por Id/////////////////////////
     public async consultaIdUser ( id: string): Promise<IResponse>{
         return new Promise(( resolve, reject ) =>{
             if( !id ) {
@@ -66,6 +66,27 @@ export default class UserController {
             });
         });
     }
-    
+    ////////////////////////////////////////// Delete logico Usuario /////////////////////////
+    public async deleteUser ( id : string): Promise<IResponse>{
+        return new Promise(( resolve, reject ) =>{
+            
+            
+            if( !id ) {
+                logger.error('user no deleted');
+                return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
+            }
+            const user:any = this.consultaIdUser(id);
+            console.log("2: "+user.vigente);
+            user.vigente = (user.vigente == true) ? false : true;
+            User.updateOne( {_id:user.id}, ( err: any, userDeleted: any ) => {
+                if( err ){
+                    logger.error ( err );
+                    return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+                }
+                logger.info('Usuario logical deleted succesfuly');
+                return resolve({ ok: true, message: 'User logical deleted ', response: userDeleted, code: 200 });
+            });
+        });
+    }
 };
 

@@ -11,8 +11,8 @@ const userSchema: Schema = new Schema({
      email: {type: String, unique: true},
      role: {type: String,  enum: rolesPermitidos,default:"client"},
      address: {type: String, required: true },
-     descripction:{type: String }
-     
+     descripction:{type: String },
+     vigente: {type: Boolean, required: true}     
 }, { collection: 'users'})
 
 export default mongoose.model('User', userSchema)
