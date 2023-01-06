@@ -19,6 +19,21 @@ const user_model_1 = __importDefault(require("../models/user.model"));
 /////////////////////////////////////////
 class UserController {
     ///////////////////////////////////////////GETS////////////////////////////////////
+    ////////////////////////////////////////// Consultar Usuarios general/////////////////////////
+    consultaUsers() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                user_model_1.default.find((err, usersLocated) => {
+                    if (err) {
+                        logger_1.default.error(err);
+                        return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+                    }
+                    logger_1.default.info('Usuarios locateds succesfuly');
+                    return resolve({ ok: true, message: 'Users locateds', response: usersLocated, code: 200 });
+                });
+            });
+        });
+    }
     ////////////////////////////////////////// Consultar Usuario por Id/////////////////////////
     consultaIdUser(id) {
         return __awaiter(this, void 0, void 0, function* () {

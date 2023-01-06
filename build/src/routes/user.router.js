@@ -28,6 +28,16 @@ UserRoutes.get('/user/ping', (req, res) => __awaiter(void 0, void 0, void 0, fun
     logger_1.default.info('ping received');
     res.status(200).json('/pong');
 }));
+UserRoutes.get('/consultaUsers', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let id = req.params.id;
+    try {
+        const response = yield userService.consultaUsers();
+        return res.status(response.code).json(response);
+    }
+    catch (err) {
+        return res.status(err.code ? err.code : 500).json(err);
+    }
+}));
 UserRoutes.get('/locatedId/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let id = req.params.id;
     try {

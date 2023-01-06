@@ -11,6 +11,19 @@ import User from '../models/user.model'
 
 export default class UserController {
 ///////////////////////////////////////////GETS////////////////////////////////////
+////////////////////////////////////////// Consultar Usuarios general/////////////////////////
+public async consultaUsers (): Promise<IResponse>{
+    return new Promise(( resolve, reject ) =>{        
+        User.find( ( err: any, usersLocated: any ) => {
+            if( err ){
+                logger.error ( err );
+                return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+            }
+            logger.info('Usuarios locateds succesfuly');
+            return resolve({ ok: true, message: 'Users locateds', response: usersLocated, code: 200 });
+        });
+    });
+}
     ////////////////////////////////////////// Consultar Usuario por Id/////////////////////////
     public async consultaIdUser ( id: string): Promise<IResponse>{
         return new Promise(( resolve, reject ) =>{

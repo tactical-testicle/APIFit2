@@ -26,6 +26,22 @@ const userService = new UserController
     
     });
 
+    UserRoutes.get('/consultaUsers', async (req: Request, res: Response) => {
+        let id = req.params.id;
+        try{
+
+            const response = await userService.consultaUsers();
+
+            return res.status( response.code ).json( response );
+
+        }catch( err: any ){
+
+            return res.status( err.code? err.code: 500).json(err);
+
+        }
+    
+    });
+
     UserRoutes.get('/locatedId/:id', async (req: Request, res: Response) => {
         let id = req.params.id;
         try{
