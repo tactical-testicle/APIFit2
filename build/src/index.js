@@ -9,6 +9,7 @@ const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
 const user_router_1 = __importDefault(require("./routes/user.router"));
 const cliente_router_1 = __importDefault(require("./routes/cliente.router"));
+const agenda_router_1 = __importDefault(require("./routes/agenda.router"));
 const server = server_class_1.default.instance;
 const mongo = mongodb_1.default.instance;
 server.app.enable('trusty proxy');
@@ -18,5 +19,6 @@ server.app.use((0, cors_1.default)({ origin: true, credentials: true }));
 ///////////////////////////////////PATHs////////////////////////////////////////////////////////
 server.app.use('/user', user_router_1.default);
 server.app.use('/cliente', cliente_router_1.default);
+server.app.use('/agenda', agenda_router_1.default);
 mongo.connectDB();
 server.start();

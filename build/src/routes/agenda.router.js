@@ -15,17 +15,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 //////////////////////////////////////////////
 //////////////////////////////////Controllers
-const cliente_controller_1 = __importDefault(require("../controller/cliente.controller"));
+const agenda_controller_1 = __importDefault(require("../controller/agenda.controller"));
 //////////////////////////////////////////////
-const ClienteRoutes = (0, express_1.Router)();
+const AgendaRoutes = (0, express_1.Router)();
 ////////////////////////////////Servicios
-const clienteService = new cliente_controller_1.default;
+const agendaService = new agenda_controller_1.default;
 /////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////RUTAS USUARIO CRUD ///////////////////////////////////////////
 ///////////////////////////////////////GETS///////////////////////////////////
-ClienteRoutes.get('/consultaClientes', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+AgendaRoutes.get('/consultaAgenda/:idTrainer', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let idTrainer = req.params.idTrainer;
     try {
-        const response = yield clienteService.consultaClientes();
+        const response = yield agendaService.consultaAgenda(idTrainer);
         return res.status(response.code).json(response);
     }
     catch (err) {
@@ -33,11 +34,11 @@ ClienteRoutes.get('/consultaClientes', (req, res) => __awaiter(void 0, void 0, v
     }
 }));
 ///////////////////////////////POSTS//////////////////////////////////////
-///////////////////////////////CREAR CLIENTE
-ClienteRoutes.post('/createCliente', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const clienteBody = req.body;
+///////////////////////////////CREAR CITA DE CLIENTE
+AgendaRoutes.post('/createAgenda', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const agendaBody = req.body;
     try {
-        const response = yield clienteService.createCliente(clienteBody);
+        const response = yield agendaService.createAgenda(agendaBody);
         return res.status(response.code).json(response);
     }
     catch (err) {
@@ -45,4 +46,4 @@ ClienteRoutes.post('/createCliente', (req, res) => __awaiter(void 0, void 0, voi
     }
 }));
 //////////////////////////////////FIN POST /////////////////////////////////////
-exports.default = ClienteRoutes;
+exports.default = AgendaRoutes;
