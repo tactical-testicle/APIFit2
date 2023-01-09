@@ -24,17 +24,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const rolesPermitidos = ['Admin', 'Clientes', 'Trainer'];
-const userSchema = new mongoose_1.Schema({
-    ////////////////////////////////Admin, client and Trainer //////////////////////////
-    name: { type: String, required: true },
-    lasname: { type: String },
-    cellphone: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    email: { type: String, unique: true },
-    role: { type: String, enum: rolesPermitidos, default: "client" },
-    address: { type: String, required: true },
-    descripction: { type: String },
-    vigente: { type: Boolean, required: true }
-}, { collection: 'users' });
-exports.default = mongoose_1.default.model('User', userSchema);
+const clienteSchema = new mongoose_1.Schema({
+    ////////////////////////////////Client//////////////////////////
+    idUsuario: { type: String, required: true },
+    idTrainer: { type: String },
+    formacion: { type: String, required: true, unique: true },
+    edad: { type: Number, required: true },
+    peso: { type: Number, required: true },
+    alergias: { type: String, unique: true },
+    enfermedades: { type: String, required: true },
+    genero: { type: String },
+    embarazo: { type: Boolean },
+    diabetes: { type: Boolean }
+}, { collection: 'clientes' });
+exports.default = mongoose_1.default.model('Cliente', clienteSchema);

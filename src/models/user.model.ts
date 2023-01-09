@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
-const rolesPermitidos = ['Admin','client','Trainer'];
+const rolesPermitidos = ['Admin','Clientes','Trainer'];
 
 const userSchema: Schema = new Schema({
      ////////////////////////////////Admin, client and Trainer //////////////////////////
