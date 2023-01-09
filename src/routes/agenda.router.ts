@@ -56,6 +56,36 @@ const agendaService = new AgendaController
         }
     });    
 //////////////////////////////////FIN POST /////////////////////////////////////
+    AgendaRoutes.put('/updateAgenda', async ( req: Request, res: Response ) => {
 
+        const agendaBody: IAgenda = req.body;
+        
+        try{
 
+            const response = await agendaService.updateAgenda(agendaBody);
+
+            return res.status( response.code ).json( response );
+
+        }catch( err: any ){
+
+            return res.status( err.code? err.code: 500).json(err);
+
+        }
+    });
+
+    ///////////////////////////////BORRADO CITA
+    AgendaRoutes.put('/deleteAgenda', async ( req: Request, res: Response ) => {
+        const agendaBody: IAgenda = req.body;            
+        try{
+    
+            const response = await agendaService.deleteAgenda(agendaBody);
+    
+            return res.status( response.code ).json( response );
+    
+        }catch( err: any ){
+    
+            return res.status( err.code? err.code: 500).json(err);
+    
+        }
+    });
 export default AgendaRoutes

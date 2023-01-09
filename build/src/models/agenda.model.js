@@ -28,6 +28,6 @@ const agendaSchema = new mongoose_1.Schema({
     ////////////////////////////////Client//////////////////////////
     idUsuario: { type: String, required: true },
     idTrainer: { type: String, require: true },
-    fecha: { type: Date, require: true }
+    fecha: { type: Date, require: true, unique: true }
 }, { collection: 'agendas' });
 exports.default = mongoose_1.default.model('Agenda', agendaSchema);

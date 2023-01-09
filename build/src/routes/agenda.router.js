@@ -46,4 +46,25 @@ AgendaRoutes.post('/createAgenda', (req, res) => __awaiter(void 0, void 0, void 
     }
 }));
 //////////////////////////////////FIN POST /////////////////////////////////////
+AgendaRoutes.put('/updateAgenda', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const agendaBody = req.body;
+    try {
+        const response = yield agendaService.updateAgenda(agendaBody);
+        return res.status(response.code).json(response);
+    }
+    catch (err) {
+        return res.status(err.code ? err.code : 500).json(err);
+    }
+}));
+///////////////////////////////BORRADO CITA
+AgendaRoutes.put('/deleteAgenda', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const agendaBody = req.body;
+    try {
+        const response = yield agendaService.deleteAgenda(agendaBody);
+        return res.status(response.code).json(response);
+    }
+    catch (err) {
+        return res.status(err.code ? err.code : 500).json(err);
+    }
+}));
 exports.default = AgendaRoutes;
