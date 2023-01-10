@@ -21,13 +21,14 @@ export default class RutinaController {
             }
 
             Rutina.find().populate( [
-                    { path: 'idCliente', model: 'Cliente' },
+                    { path: 'idCliente', model: 'Cliente', select:'edad peso genero' },
                     { path: 'idEjercicio', model: 'Ejercicio'}
                 ])
                 .exec((err,rutinaLocated) => {
                     if( err ){
                         logger.error ( err );
                         return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+                        
                     }
                     logger.info('Rutina located succesfuly');
                     return resolve({ ok: true, message: 'Rutina located', response: rutinaLocated, code: 200 });
