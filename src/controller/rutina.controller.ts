@@ -7,12 +7,12 @@ import IRutina from '../interfaces/rutina.interface';
 /////////////////////////////////////////
 //////////////////////////////Modelos
 import Rutina from '../models/rutina.model'
+import User from '../models/user.model'
 
 /////////////////////////////////////////
 
-export default class UserController {
+export default class RutinaController {
 ///////////////////////////////////////////GETS////////////////////////////////////
-
     ////////////////////////////////////////// Consultar Rutina por idCliente y fecha /////////////////////////
     public async consultaRutinaCliente ( idCliente: string, fecha: Data): Promise<IResponse>{
         return new Promise(( resolve, reject ) =>{
@@ -20,7 +20,8 @@ export default class UserController {
                 logger.error('rutina no located');
                 return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
             }
-            Rutina.find( {idCliente, fecha}, ( err: any, rutinaLocated: any ) => {
+
+            Rutina.find({ idCliente, fecha }).populate("user").exec((err,rutinaLocated) => {
                 if( err ){
                     logger.error ( err );
                     return reject({ ok: false, message: 'Error ', response: null, code: 500 });

@@ -26,8 +26,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const agendaSchema = new mongoose_1.Schema({
     ////////////////////////////////Client//////////////////////////
-    idUsuario: { type: String, required: true },
-    idTrainer: { type: String, require: true },
+    idUsuario: { type: mongoose_1.Schema.Types.ObjectId, ref: 'clientes' },
+    idTrainer: { type: mongoose_1.Schema.Types.ObjectId, ref: 'trainers' },
     fecha: { type: Date, require: true, unique: true }
 }, { collection: 'agendas' });
 exports.default = mongoose_1.default.model('Agenda', agendaSchema);

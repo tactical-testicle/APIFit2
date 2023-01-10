@@ -24,15 +24,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const rutinaSchema = new mongoose_1.Schema({
-    ////////////////////////////////Admin, client and Trainer //////////////////////////
-    idEjercicio: { type: mongoose_1.Schema.Types.ObjectId, ref: 'ejercicios' },
-    fecha: { type: Date, required: true },
-    serie: { type: Number, required: true },
-    repeticion: { type: Number },
-    tiempo: { type: String },
-    completado: { type: Number, required: true },
-    observacion: { type: String },
-    idCliente: { type: mongoose_1.Schema.Types.ObjectId, ref: 'clientes' }
-}, { collection: 'rutinas' });
-exports.default = mongoose_1.default.model('Rutina', rutinaSchema);
+const trainerSchema = new mongoose_1.Schema({
+    idUsuario: { type: mongoose_1.Schema.Types.ObjectId, ref: 'users' },
+    gym: { type: String, required: true }
+}, { collection: 'trainers' });
+exports.default = mongoose_1.default.model('Trainer', trainerSchema);

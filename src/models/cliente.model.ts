@@ -2,8 +2,8 @@ import mongoose, { Schema } from 'mongoose';
 
 const clienteSchema: Schema = new Schema({
      ////////////////////////////////Client//////////////////////////
-     idUsuario: {type: String, required: true },
-     idTrainer: {type: String },
+     idUsuario: {type: Schema.Types.ObjectId, ref:'users'},
+     idTrainer: {type: Schema.Types.ObjectId, ref:'trainers'},
      formacion: {type: String, required: true, unique: true},
      edad: {type: Number, required: true},
      peso: {type: Number, required: true},

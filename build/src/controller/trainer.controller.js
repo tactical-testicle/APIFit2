@@ -15,49 +15,45 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const logger_1 = __importDefault(require("../../lib/logger"));
 /////////////////////////////////////////
 //////////////////////////////Modelos
-const rutina_model_1 = __importDefault(require("../models/rutina.model"));
+const trainer_model_1 = __importDefault(require("../models/trainer.model"));
 /////////////////////////////////////////
-class RutinaController {
+class TrainerController {
     ///////////////////////////////////////////GETS////////////////////////////////////
-    ////////////////////////////////////////// Consultar Rutina por idCliente y fecha /////////////////////////
-    consultaRutinaCliente(idCliente, fecha) {
+    ////////////////////////////////////////// Consultar trainer general/////////////////////////
+    consultaTrainers() {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
-                if (!idCliente || !fecha) {
-                    logger_1.default.error('rutina no located');
-                    return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
-                }
-                rutina_model_1.default.find({ idCliente, fecha }).populate("user").exec((err, rutinaLocated) => {
+                trainer_model_1.default.find((err, trainersLocated) => {
                     if (err) {
                         logger_1.default.error(err);
                         return reject({ ok: false, message: 'Error ', response: null, code: 500 });
                     }
-                    logger_1.default.info('Rutina located succesfuly');
-                    return resolve({ ok: true, message: 'Rutina located', response: rutinaLocated, code: 200 });
+                    logger_1.default.info('Trainers locateds succesfuly');
+                    return resolve({ ok: true, message: 'Trainers locateds', response: trainersLocated, code: 200 });
                 });
             });
         });
     }
-    ///////////////////////////////////////////POST////////////////////////////////////
-    ////////////////////////////////////////// Crear Rutina /////////////////////////
-    createRutina(rutina) {
+    ///////////////////////////////////////////POST////////////////////////////////////   
+    ////////////////////////////////////////// Crear Trainer /////////////////////////
+    createTrainer(trainer) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
-                if (!rutina) {
-                    logger_1.default.error('rutina no created');
+                if (!trainer) {
+                    logger_1.default.error('grupo no created');
                     return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
                 }
-                rutina_model_1.default.create(rutina, (err, rutinaCreated) => {
+                trainer_model_1.default.create(trainer, (err, trainerCreated) => {
                     if (err) {
                         logger_1.default.error(err);
                         return reject({ ok: false, message: 'Error ', response: null, code: 500 });
                     }
-                    logger_1.default.info('Rutina created succesfuly');
-                    return resolve({ ok: true, message: 'Rutina created', response: rutinaCreated, code: 200 });
+                    logger_1.default.info('Trainer created succesfuly');
+                    return resolve({ ok: true, message: 'Trainer created', response: trainerCreated, code: 200 });
                 });
             });
         });
     }
 }
-exports.default = RutinaController;
+exports.default = TrainerController;
 ;

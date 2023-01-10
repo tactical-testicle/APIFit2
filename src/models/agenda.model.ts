@@ -2,8 +2,8 @@ import mongoose, { Schema } from 'mongoose';
 
 const agendaSchema: Schema = new Schema({
      ////////////////////////////////Client//////////////////////////
-     idUsuario: {type: String, required: true },
-     idTrainer: {type: String, require: true },
+     idUsuario: {type: Schema.Types.ObjectId, ref:'clientes' },
+     idTrainer: {type: Schema.Types.ObjectId, ref:'trainers' },
      fecha: {type: Date, require: true, unique: true}
 }, { collection: 'agendas'})
 

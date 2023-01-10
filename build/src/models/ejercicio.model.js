@@ -25,7 +25,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const ejercicioSchema = new mongoose_1.Schema({
-    idGrupo: { type: String, required: true },
+    idGrupo: { type: mongoose_1.Schema.Types.ObjectId, ref: 'grupos' },
     name: { type: String, required: true },
 }, { collection: 'ejercicios' });
 exports.default = mongoose_1.default.model('Ejercicio', ejercicioSchema);

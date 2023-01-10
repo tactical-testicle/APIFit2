@@ -8,6 +8,7 @@ import AgendaRoutes from './routes/agenda.router'
 import GrupoRoutes from './routes/grupo.router'
 import EjercicioRoutes from './routes/ejercicio.router'
 import RutinaRoutes from './routes/rutina.router'
+import TrainerRoutes from './routes/trainer.router'
 
 const server = Server.instance
 const mongo = MongoCon.instance
@@ -28,6 +29,7 @@ server.app.use('/agenda', AgendaRoutes)
 server.app.use('/grupo', GrupoRoutes)
 server.app.use('/ejercicio', EjercicioRoutes)
 server.app.use('/rutina', RutinaRoutes)
+server.app.use('/trainer', TrainerRoutes)
 
 mongo.connectDB()
 
