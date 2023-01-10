@@ -20,13 +20,17 @@ export default class RutinaController {
                 return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
             }
 
-            Rutina.find().populate( [{path: 'idCliente', model: 'Cliente'},{path: 'idEjercicio', model: 'Ejercicio'}] ).exec((err,rutinaLocated) => {
-                if( err ){
-                    logger.error ( err );
-                    return reject({ ok: false, message: 'Error ', response: null, code: 500 });
-                }
-                logger.info('Rutina located succesfuly');
-                return resolve({ ok: true, message: 'Rutina located', response: rutinaLocated, code: 200 });
+            Rutina.find().populate( [
+                    { path: 'idCliente', model: 'Cliente' },
+                    { path: 'idEjercicio', model: 'Ejercicio'}
+                ])
+                .exec((err,rutinaLocated) => {
+                    if( err ){
+                        logger.error ( err );
+                        return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+                    }
+                    logger.info('Rutina located succesfuly');
+                    return resolve({ ok: true, message: 'Rutina located', response: rutinaLocated, code: 200 });
             });
         });
     }
