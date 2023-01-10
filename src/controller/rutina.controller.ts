@@ -21,7 +21,7 @@ export default class RutinaController {
                 return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
             }
 
-            Rutina.find({ idCliente, fecha }).populate("user").exec((err,rutinaLocated) => {
+            Rutina.find({ idCliente, fecha }).populate({path: "Cliente"}).exec((err,rutinaLocated) => {
                 if( err ){
                     logger.error ( err );
                     return reject({ ok: false, message: 'Error ', response: null, code: 500 });

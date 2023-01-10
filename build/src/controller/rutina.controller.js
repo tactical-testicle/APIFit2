@@ -27,7 +27,7 @@ class RutinaController {
                     logger_1.default.error('rutina no located');
                     return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
                 }
-                rutina_model_1.default.find({ idCliente, fecha }).populate("user").exec((err, rutinaLocated) => {
+                rutina_model_1.default.find({ idCliente, fecha }).populate({ path: "Cliente" }).exec((err, rutinaLocated) => {
                     if (err) {
                         logger_1.default.error(err);
                         return reject({ ok: false, message: 'Error ', response: null, code: 500 });
