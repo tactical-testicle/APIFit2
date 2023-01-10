@@ -22,6 +22,7 @@ server.app.use(express.json())
 
 server.app.use(cors({origin: true, credentials: true}))
 
+mongo.connectDB()
 ///////////////////////////////////PATHs////////////////////////////////////////////////////////
 server.app.use('/user', UserRoutes)
 server.app.use('/cliente', ClienteRoutes)
@@ -31,7 +32,6 @@ server.app.use('/ejercicio', EjercicioRoutes)
 server.app.use('/rutina', RutinaRoutes)
 server.app.use('/trainer', TrainerRoutes)
 
-mongo.connectDB()
 
 
 server.start()

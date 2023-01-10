@@ -7,8 +7,7 @@ import IRutina from '../interfaces/rutina.interface';
 /////////////////////////////////////////
 //////////////////////////////Modelos
 import Rutina from '../models/rutina.model'
-import User from '../models/user.model'
-
+import Cliente from '../models/cliente.model'
 /////////////////////////////////////////
 
 export default class RutinaController {
@@ -21,7 +20,7 @@ export default class RutinaController {
                 return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
             }
 
-            Rutina.find({ idCliente, fecha }).populate( Rutina, {path: "Cliente"}).exec((err,rutinaLocated) => {
+            Rutina.find().populate( [{path: 'idCliente', model: 'Cliente'},{path: 'idEjercicio', model: 'Ejercicio'}] ).exec((err,rutinaLocated) => {
                 if( err ){
                     logger.error ( err );
                     return reject({ ok: false, message: 'Error ', response: null, code: 500 });
