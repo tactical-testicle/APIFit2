@@ -9,7 +9,7 @@ const userSchema: Schema = new Schema({
      cellphone: {type: String, required: true, unique: true},
      password: {type: String, required: true},
      email: {type: String, unique: true},
-     role: {type: String,  enum: rolesPermitidos,default:"client"},
+     role: {type: String,  enum: rolesPermitidos},
      address: {type: String, required: true },
      descripction:{type: String },
      vigente: {type: Boolean, required: true}     

@@ -36,6 +36,21 @@ const agendaService = new AgendaController
     
     });
 
+    AgendaRoutes.get('/consultaAgendaCliente/:idCliente', async (req: Request, res: Response) => {
+        let idCliente = req.params.idCliente;
+        try{
+
+            const response = await agendaService.consultaAgendaCliente(idCliente);
+
+            return res.status( response.code ).json( response );
+
+        }catch( err: any ){
+
+            return res.status( err.code? err.code: 500).json(err);
+
+        }
+    
+    });
 
     ///////////////////////////////POSTS//////////////////////////////////////
             ///////////////////////////////CREAR CITA DE CLIENTE

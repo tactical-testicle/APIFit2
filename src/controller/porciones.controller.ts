@@ -1,0 +1,128 @@
+import logger from '../../lib/logger';
+
+//////////////////////////////interfaces
+import IResponse from '../interfaces/response.interface';
+import IPorciones from '../interfaces/porciones.interface';
+/////////////////////////////////////////
+//////////////////////////////Modelos
+import Porciones from '../models/porciones.model'
+import { Data } from 'ws';
+import { response } from 'express';
+/////////////////////////////////////////
+
+export default class PorcionesController {
+///////////////////////////////////////////GETS////////////////////////////////////
+////////////////////////////////////////// Consultar porciones asigandas por cliente/////////////////////////
+public async consultaPorcioness (idCliente: string): Promise<IResponse>{
+    var original = true;
+    return new Promise(( resolve, reject ) =>{   
+        if( !idCliente ) {
+            logger.error('Porciones no located');
+            return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
+        }             
+        Porciones.find({idCliente, original}).populate( [
+            { path: 'idCliente', model: 'Cliente', select:'idUsuario',
+                populate: ([{
+                    path: 'idUsuario',
+                    model: 'User',
+                    select: 'name lasname'
+                }])
+            }
+        ])
+        .exec((err,porcionessLocated) => {
+            if( err ){
+                logger.error ( err );
+                return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+                
+            }
+            logger.info('Porciones asignadas al cliente localizadas exitosamente.');
+            return resolve({ ok: true, message: 'Porciones asignadas al cliente localizadas.', response: porcionessLocated, code: 200 });
+        });
+    });
+}
+    
+// Porciones que lleva consumidas el cliente.
+public async consultaPorcionessCheck (idCliente: string, fecha: Date): Promise<IResponse>{
+    var original = false;
+    return new Promise(( resolve, reject ) =>{   
+        if( !idCliente ) {
+            logger.error('Porciones no located');
+            return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
+        }             
+        Porciones.find({idCliente, fecha, original}).exec((err,porcionessLocated) => {
+            if( err ){
+                logger.error ( err );
+                return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+                
+            }
+            logger.info('Porciones que lleva consumidas el cliente.');
+            return resolve({ ok: true, message: 'Porciones que lleva consumidas el cliente.', response: porcionessLocated, code: 200 });
+        });
+    });
+}
+
+///////////////////////////////////////////POST////////////////////////////////////   
+    ////////////////////////////////////////// Crear Porciones /////////////////////////
+    public async createPorciones (porciones: IPorciones): Promise<IResponse>{
+        return new Promise(( resolve, reject ) =>{
+            if( !porciones ) {
+                logger.error('porciones no created');
+                return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
+            }
+            //Crear la porcion original
+            Porciones.create(porciones, ( err: any, porcionesCreated: any ) => {
+                if( err ){
+                    logger.error ( err );
+                    return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+                }
+                logger.info('Porciones asignadas al cliente exitosamente.');
+                return resolve({ ok: true, message: 'Porciones asignadas al cliente exitosamente.', response: porcionesCreated, code: 200 });
+            });
+            //Crear registro para inicializar las porciones que van a ir chekeando
+            porciones.frutas=0; porciones.verduras=0;
+            porciones.cereales=0; porciones.leguminosas=0;
+            porciones.origenAnimal=0; porciones.leche=0;
+            porciones.grasa=0; porciones.azucar=0;            
+            porciones.original=false;
+            Porciones.create(porciones, ( err: any, porcionesCreated: any ) => {
+                if( err ){
+                    logger.error ( err );
+                    return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+                }
+                logger.info('Porciones inicializadas al cliente exitosamente.');
+                return resolve({ ok: true, message: 'Porciones inicializadas al cliente exitosamente.', response: porcionesCreated, code: 200 });
+            });
+        });
+    }
+    ////////////////////////////////////////FIN POST /////////////////////////////////////////    
+
+    ////////////////////////////////////////// Checkar Porciones al dia /////////////////////////
+    public async updateCheckPorciones (porciones: IPorciones): Promise<IResponse>{
+        return new Promise(( resolve, reject ) =>{
+            if( !porciones ) {
+                logger.error('porciones no modified');
+                return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
+            }
+           
+            //Revisar cuantas porciones llevaba            
+            this.consultaPorcionessCheck( porciones.idCliente, porciones.fecha ).then((response)=>{
+                const porcionesOld  = response.response                       
+                const filter = { idCliente: porciones.idCliente, fecha: porciones.fecha, original: false };
+                const update = {
+                    frutas:(porciones.frutas+porcionesOld[0].frutas) , verduras: (porciones.verduras+porcionesOld[0].verduras),
+                    cereales: (porciones.cereales+porcionesOld[0].cereales),leguminosas: (porciones.leguminosas+porcionesOld[0].leguminosas),
+                    origenAnimal: (porciones.origenAnimal+porcionesOld[0].origenAnimal), leche: (porciones.leche+porcionesOld[0].leche),
+                    grasa: (porciones.grasa+porcionesOld[0].grasa)};
+                Porciones.updateOne(filter, update, ( err: any, porcionesUpdate: any ) => {
+                     if( err ){
+                         logger.error ( err );
+                         return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+                     }
+                     logger.info('Porcion consumida registrada exitosamente.');
+                     return resolve({ ok: true, message: 'Porcion consumida registrada exitosamente.', response: porcionesUpdate, code: 200 });
+                 });        
+                })
+        });
+    }
+};
+

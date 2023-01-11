@@ -24,17 +24,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const rolesPermitidos = ['Admin', 'Clientes', 'Trainer'];
-const userSchema = new mongoose_1.Schema({
-    ////////////////////////////////Admin, client and Trainer //////////////////////////
-    name: { type: String, required: true },
-    lasname: { type: String },
-    cellphone: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    email: { type: String, unique: true },
-    role: { type: String, enum: rolesPermitidos },
-    address: { type: String, required: true },
-    descripction: { type: String },
-    vigente: { type: Boolean, required: true }
-}, { collection: 'users' });
-exports.default = mongoose_1.default.model('User', userSchema);
+const porcionesSchema = new mongoose_1.Schema({
+    idCliente: { type: mongoose_1.Schema.Types.ObjectId, ref: 'clientes' },
+    frutas: { type: Number, required: true },
+    verduras: { type: Number, required: true },
+    cereales: { type: Number, required: true },
+    leguminosas: { type: Number, required: true },
+    origenAnimal: { type: Number, required: true },
+    leche: { type: Number, required: true },
+    grasa: { type: Number, required: true },
+    azucar: { type: Number, required: true },
+    fecha: { type: Date, required: true },
+    original: { type: Boolean, required: true }
+}, { collection: 'porcioness' });
+exports.default = mongoose_1.default.model('Porciones', porcionesSchema);

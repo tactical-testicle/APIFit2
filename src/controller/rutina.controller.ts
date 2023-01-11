@@ -8,6 +8,7 @@ import IRutina from '../interfaces/rutina.interface';
 //////////////////////////////Modelos
 import Rutina from '../models/rutina.model'
 import Cliente from '../models/cliente.model'
+import Usuario from '../models/user.model'
 /////////////////////////////////////////
 
 export default class RutinaController {
@@ -20,9 +21,21 @@ export default class RutinaController {
                 return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
             }
 
-            Rutina.find().populate( [
-                    { path: 'idCliente', model: 'Cliente', select:'edad peso genero' },
-                    { path: 'idEjercicio', model: 'Ejercicio'}
+            Rutina.find({idCliente, fecha}).populate( [
+                    { path: 'idCliente', model: 'Cliente', select:'edad peso genero idUsuario', 
+                        populate: ([{
+                            path: 'idUsuario',
+                            model: 'User',
+                            select: 'name lasname vigente role'
+                        }])
+                    },
+                    { path: 'idEjercicio', model: 'Ejercicio',
+                        populate: ([{
+                        path: 'idGrupo',
+                        model: 'Grupo',
+                        select: 'name'
+                    }])
+                    }
                 ])
                 .exec((err,rutinaLocated) => {
                     if( err ){

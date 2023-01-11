@@ -15,40 +15,50 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 //////////////////////////////////////////////
 //////////////////////////////////Controllers
-const agenda_controller_1 = __importDefault(require("../controller/agenda.controller"));
+const porciones_controller_1 = __importDefault(require("../controller/porciones.controller"));
 //////////////////////////////////////////////
-const AgendaRoutes = (0, express_1.Router)();
+const PorcionesRoutes = (0, express_1.Router)();
 ////////////////////////////////Servicios
-const agendaService = new agenda_controller_1.default;
+const porcionesService = new porciones_controller_1.default;
 /////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////RUTAS USUARIO CRUD ///////////////////////////////////////////
-///////////////////////////////////////GETS///////////////////////////////////
-AgendaRoutes.get('/consultaAgenda/:idTrainer', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let idTrainer = req.params.idTrainer;
-    try {
-        const response = yield agendaService.consultaAgenda(idTrainer);
-        return res.status(response.code).json(response);
-    }
-    catch (err) {
-        return res.status(err.code ? err.code : 500).json(err);
-    }
-}));
-AgendaRoutes.get('/consultaAgendaCliente/:idCliente', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+PorcionesRoutes.get('/consultaPorciones/:idCliente', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let idCliente = req.params.idCliente;
     try {
-        const response = yield agendaService.consultaAgendaCliente(idCliente);
+        const response = yield porcionesService.consultaPorcioness(idCliente);
         return res.status(response.code).json(response);
     }
     catch (err) {
         return res.status(err.code ? err.code : 500).json(err);
     }
 }));
-///////////////////////////////POSTS//////////////////////////////////////
-///////////////////////////////CREAR CITA DE CLIENTE
-AgendaRoutes.post('/createAgenda', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const agendaBody = req.body;
+PorcionesRoutes.get('/consultaPorcionesCheck/:idCliente/:fecha', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let idCliente = req.params.idCliente;
+    let fecha = new Date(req.params.fecha);
     try {
-        const response = yield agendaService.createAgenda(agendaBody);
+        const response = yield porcionesService.consultaPorcionessCheck(idCliente, fecha);
+        return res.status(response.code).json(response);
+    }
+    catch (err) {
+        return res.status(err.code ? err.code : 500).json(err);
+    }
+}));
+///////////////////////////////ASIGNAR PORCIONES AL CLIENTE
+PorcionesRoutes.post('/createPorciones', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const porcionesBody = req.body;
+    try {
+        const response = yield porcionesService.createPorciones(porcionesBody);
+        return res.status(response.code).json(response);
+    }
+    catch (err) {
+        return res.status(err.code ? err.code : 500).json(err);
+    }
+}));
+///////////////////////////////CHECK PORCIONES POR DIA
+PorcionesRoutes.put('/checkPorciones', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const porcionesBody = req.body;
+    try {
+        const response = yield porcionesService.updateCheckPorciones(porcionesBody);
         return res.status(response.code).json(response);
     }
     catch (err) {
@@ -56,25 +66,4 @@ AgendaRoutes.post('/createAgenda', (req, res) => __awaiter(void 0, void 0, void 
     }
 }));
 //////////////////////////////////FIN POST /////////////////////////////////////
-AgendaRoutes.put('/updateAgenda', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const agendaBody = req.body;
-    try {
-        const response = yield agendaService.updateAgenda(agendaBody);
-        return res.status(response.code).json(response);
-    }
-    catch (err) {
-        return res.status(err.code ? err.code : 500).json(err);
-    }
-}));
-///////////////////////////////BORRADO CITA
-AgendaRoutes.put('/deleteAgenda', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const agendaBody = req.body;
-    try {
-        const response = yield agendaService.deleteAgenda(agendaBody);
-        return res.status(response.code).json(response);
-    }
-    catch (err) {
-        return res.status(err.code ? err.code : 500).json(err);
-    }
-}));
-exports.default = AgendaRoutes;
+exports.default = PorcionesRoutes;

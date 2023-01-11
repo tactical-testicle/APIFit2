@@ -38,6 +38,24 @@ class AgendaController {
             });
         });
     }
+    consultaAgendaCliente(idCliente) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                if (!idCliente) {
+                    logger_1.default.error('agenda no located');
+                    return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
+                }
+                agenda_model_1.default.find({ idCliente }, (err, agendaLocated) => {
+                    if (err) {
+                        logger_1.default.error(err);
+                        return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+                    }
+                    logger_1.default.info('Citas del cliente localizadas exitosamente.');
+                    return resolve({ ok: true, message: 'Citas localizadas', response: agendaLocated, code: 200 });
+                });
+            });
+        });
+    }
     ///////////////////////////////////////////POST////////////////////////////////////
     ////////////////////////////////////////// Crear agenda /////////////////////////
     createAgenda(agenda) {

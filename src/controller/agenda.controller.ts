@@ -28,7 +28,23 @@ public async consultaAgenda (idTrainer: string): Promise<IResponse>{
         });
     });
 }
-    
+
+public async consultaAgendaCliente (idCliente: string): Promise<IResponse>{
+    return new Promise(( resolve, reject ) =>{        
+        if( !idCliente ) {
+            logger.error('agenda no located');
+            return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
+        }
+        Agenda.find({idCliente}, ( err: any, agendaLocated: any ) => {
+            if( err ){
+                logger.error ( err );
+                return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+            }
+            logger.info('Citas del cliente localizadas exitosamente.');
+            return resolve({ ok: true, message: 'Citas localizadas', response: agendaLocated, code: 200 });
+        });
+    });
+}
 ///////////////////////////////////////////POST////////////////////////////////////
    
     ////////////////////////////////////////// Crear agenda /////////////////////////
