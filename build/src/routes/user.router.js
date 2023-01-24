@@ -21,9 +21,24 @@ const user_controller_1 = __importDefault(require("../controller/user.controller
 const UserRoutes = (0, express_1.Router)();
 ////////////////////////////////Servicios
 const userService = new user_controller_1.default;
+/* COSAS PARA WEBSOCKET */
+const router = (0, express_1.Router)();
 /////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////RUTAS USUARIO CRUD ///////////////////////////////////////////
 ///////////////////////////////////////GETS///////////////////////////////////
+/* COSAS PARA WEBSOCKET */
+router.get("/", (_req, res) => {
+    res.send({ uptime: process.uptime() });
+});
+var http = require("http").Server(router);
+let io = require("socket.io")(http);
+const server = http.listen(3000, function () {
+    console.log("listening on *:3000");
+});
+io.on("connection", function (socket) {
+    console.log("a user connected");
+});
+/* FIN COSAS PARA WEBSOCKET */
 UserRoutes.get('/user/ping', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     logger_1.default.info('ping received');
     res.status(200).json('/pong');

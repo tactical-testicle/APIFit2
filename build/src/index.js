@@ -15,6 +15,7 @@ const ejercicio_router_1 = __importDefault(require("./routes/ejercicio.router"))
 const rutina_router_1 = __importDefault(require("./routes/rutina.router"));
 const trainer_router_1 = __importDefault(require("./routes/trainer.router"));
 const porciones_router_1 = __importDefault(require("./routes/porciones.router"));
+const compromiso_router_1 = __importDefault(require("./routes/compromiso.router"));
 const server = server_class_1.default.instance;
 const mongo = mongodb_1.default.instance;
 server.app.enable('trusty proxy');
@@ -31,4 +32,5 @@ server.app.use('/ejercicio', ejercicio_router_1.default);
 server.app.use('/rutina', rutina_router_1.default);
 server.app.use('/trainer', trainer_router_1.default);
 server.app.use('/porciones', porciones_router_1.default);
+server.app.use('/compromiso', compromiso_router_1.default);
 server.start();

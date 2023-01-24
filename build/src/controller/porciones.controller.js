@@ -119,16 +119,13 @@ class PorcionesController {
                 //Revisar cuantas porciones llevaba            
                 this.consultaPorcionessCheck(porciones.idCliente, porciones.fecha).then((response) => {
                     const porcionesOld = response.response;
-                    console.log(porcionesOld[0]);
-                    console.log("vieja leche: " + porcionesOld[0].leche);
                     const filter = { idCliente: porciones.idCliente, fecha: porciones.fecha, original: false };
                     const update = {
-                        frutas: porciones.frutas, verduras: porciones.verduras,
-                        cereales: porciones.cereales, leguminosas: porciones.leguminosas,
-                        origenAnimal: porciones.origenAnimal, leche: (porciones.leche + porcionesOld[0].leche),
-                        grasa: porciones.grasa, azucar: porciones.azucar
+                        frutas: (porciones.frutas + porcionesOld[0].frutas), verduras: (porciones.verduras + porcionesOld[0].verduras),
+                        cereales: (porciones.cereales + porcionesOld[0].cereales), leguminosas: (porciones.leguminosas + porcionesOld[0].leguminosas),
+                        origenAnimal: (porciones.origenAnimal + porcionesOld[0].origenAnimal), leche: (porciones.leche + porcionesOld[0].leche),
+                        grasa: (porciones.grasa + porcionesOld[0].grasa)
                     };
-                    logger_1.default.info(filter + " - " + update);
                     porciones_model_1.default.updateOne(filter, update, (err, porcionesUpdate) => {
                         if (err) {
                             logger_1.default.error(err);

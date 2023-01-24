@@ -14,10 +14,28 @@ import UserController from '../controller/user.controller';
 const UserRoutes = Router()
 ////////////////////////////////Servicios
 const userService = new UserController
+/* COSAS PARA WEBSOCKET */
+const router = Router();
+import path = require('path');
 /////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////RUTAS USUARIO CRUD ///////////////////////////////////////////
     ///////////////////////////////////////GETS///////////////////////////////////
+    /* COSAS PARA WEBSOCKET */
+    router.get("/", (_req, res) => {
+        res.send({ uptime: process.uptime() });
+      });
+      var http = require("http").Server(router);
+      let io = require("socket.io")(http);
+      const server = http.listen(3000, function() {
+        console.log("listening on *:3000");
+      });
+      io.on("connection", function(socket: any) {
+        console.log("a user connected");
+      });
+    /* FIN COSAS PARA WEBSOCKET */
+
+
     UserRoutes.get('/user/ping', async (req: Request, res: Response) => {
     
         logger.info('ping received');

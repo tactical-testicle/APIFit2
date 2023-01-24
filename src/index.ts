@@ -10,6 +10,7 @@ import EjercicioRoutes from './routes/ejercicio.router'
 import RutinaRoutes from './routes/rutina.router'
 import TrainerRoutes from './routes/trainer.router'
 import PorcionesRoutes from './routes/porciones.router'
+import CompromisoRoutes from './routes/compromiso.router'
 
 const server = Server.instance
 const mongo = MongoCon.instance
@@ -33,7 +34,7 @@ server.app.use('/ejercicio', EjercicioRoutes)
 server.app.use('/rutina', RutinaRoutes)
 server.app.use('/trainer', TrainerRoutes)
 server.app.use('/porciones', PorcionesRoutes)
-
+server.app.use('/compromiso', CompromisoRoutes)
 
 
 server.start()
