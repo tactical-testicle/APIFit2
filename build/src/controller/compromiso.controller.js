@@ -45,14 +45,14 @@ class CompromisoController {
                     logger_1.default.error('compromiso no located');
                     return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
                 }
-                compromiso_model_1.default.find({ idCliente, vigencia: false }, (err, compromisoLocated) => {
+                compromiso_model_1.default.findOne({ idCliente, vigencia: false }, (err, compromisoLocated) => {
                     if (err) {
                         logger_1.default.error(err);
                         return reject({ ok: false, message: 'Error ', response: null, code: 500 });
                     }
                     logger_1.default.info('Compromiso localizado exitosamente.');
                     return resolve({ ok: true, message: 'Compromiso localizadas', response: compromisoLocated, code: 200 });
-                });
+                }).sort({ duracion: -1 });
             });
         });
     }
@@ -89,7 +89,6 @@ class CompromisoController {
                     var fecha1 = new Date(compromis[0].fechaCompromiso);
                     var fecha2 = new Date(compromiso.fechaCompromiso);
                     var diffFechas = fecha2.getTime() - fecha1.getTime();
-                    console.log(diffFechas);
                     //CAMBIAR A NO-VIGENTE EL COMPROMISO ANTERIOR Y AÑADIRLE LO QUE DURO
                     compromiso_model_1.default.updateOne({ idCliente: compromiso.idCliente, vigencia: true, duracion: 0 }, { vigencia: false, duracion: diffFechas }, (err, compromisReiniciado) => {
                         if (err) {

@@ -35,14 +35,14 @@ public async consultaMejorCompromiso (idCliente: string): Promise<IResponse>{
             logger.error('compromiso no located');
             return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
         }
-        Compromiso.find({idCliente, vigencia:false }, ( err: any, compromisoLocated: any ) => {
+        Compromiso.findOne({idCliente, vigencia:false}, ( err: any, compromisoLocated: any ) => {
             if( err ){
                 logger.error ( err );
                 return reject({ ok: false, message: 'Error ', response: null, code: 500 });
             }
-            logger.info('Compromiso localizado exitosamente.');
-            return resolve({ ok: true, message: 'Compromiso localizadas', response: compromisoLocated, code: 200 });
-        });
+            logger.info('Mejor compromiso localizado exitosamente.');
+            return resolve({ ok: true, message: 'Mejor compromiso localizado', response: compromisoLocated, code: 200 });
+        }).sort({duracion:-1});
     });
 }
 ///////////////////////////////////////////POST////////////////////////////////////
