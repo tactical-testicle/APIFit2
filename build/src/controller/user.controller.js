@@ -16,8 +16,12 @@ const logger_1 = __importDefault(require("../../lib/logger"));
 /////////////////////////////////////////
 //////////////////////////////Modelos
 const user_model_1 = __importDefault(require("../models/user.model"));
+const encrypt_1 = __importDefault(require("../class/encrypt"));
 /////////////////////////////////////////
 class UserController {
+    constructor() {
+        this.encrypt = new encrypt_1.default;
+    }
     ///////////////////////////////////////////GETS////////////////////////////////////
     ////////////////////////////////////////// Consultar Usuarios general/////////////////////////
     consultaUsers() {
@@ -114,6 +118,38 @@ class UserController {
                     });
                 });
             });
+        });
+    }
+    // LOGIN
+    loginAdministrator(email, password) {
+        console.log("loginAdministrator: " + email + " : " + password);
+        return new Promise((resolve, reject) => {
+            user_model_1.default.findOne({ email: email }, (err, adminDB) => __awaiter(this, void 0, void 0, function* () {
+                if (err) {
+                    logger_1.default.error(err);
+                    return reject({ ok: false, message: 'Error en base de datos', response: err, code: 500 });
+                }
+                if (!adminDB) {
+                    return reject({ ok: false, message: 'Datos incorrectos', response: 'No existe un usuario con este email', code: 404 });
+                }
+                console.log("adminDB.salt: " + adminDB.salt);
+                const { passwordHash } = this.encrypt.saltHashPassword(password, adminDB.salt);
+                console.log(passwordHash + " : " + adminDB.password);
+                if (passwordHash === adminDB.password) {
+                    adminDB.salt = null;
+                    adminDB.password = null;
+                    try {
+                        const token = yield this.encrypt.genToken(adminDB);
+                        return resolve({ ok: true, message: 'Usuario logueado con exito', response: null, token: token, code: 200 });
+                    }
+                    catch (err) {
+                        return reject({ ok: false, message: 'Ocurrion un error al generar token', response: err, code: 500 });
+                    }
+                }
+                else {
+                    return reject({ ok: false, message: 'Ocurrio un error', response: 'Password incorrecto', code: 401 });
+                }
+            }));
         });
     }
 }

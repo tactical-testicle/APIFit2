@@ -1,5 +1,6 @@
 import {Router, Request, Response} from 'express';
 
+import EncryptClass from '../class/encrypt';
 
 
 import logger from '../../lib/logger'
@@ -44,6 +45,17 @@ import path = require('path');
     
     });
 
+    UserRoutes.post( '/admin/login',async (req:Request, res: Response) => {
+        const { email, password } = req.body
+        
+        try {
+            const response = await userService.loginAdministrator(email, password)
+            return res.status(response.code).json(response)
+        } catch( err: any ) {
+            return res.status( err.code ? err.code : 500 )
+        }
+    });
+
     UserRoutes.get('/consultaUsers', async (req: Request, res: Response) => {
         let id = req.params.id;
         try{
@@ -80,9 +92,9 @@ import path = require('path');
     UserRoutes.post('/createUser', async ( req: Request, res: Response ) => {
 
         const userBody: IUser = req.body;
-        
+        const encrypt = new EncryptClass;
         try{
-
+            userBody.password = encrypt.genPassword(userBody.password.toString(), userBody.salt.toString()).passwordHash;
             const response = await userService.createUser(userBody);
 
             return res.status( response.code ).json( response );

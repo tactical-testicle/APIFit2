@@ -6,6 +6,7 @@ import ICompromiso from '../interfaces/compromiso.interface';
 /////////////////////////////////////////
 //////////////////////////////Modelos
 import Compromiso from '../models/compromiso.model'
+import Porciones from '../models/porciones.model'
 
 /////////////////////////////////////////
 
@@ -96,6 +97,27 @@ public async reinicioCompromiso ( compromiso: ICompromiso): Promise<IResponse>{
                 return resolve({ ok: true, message: 'Comprimiso created', response: compromisoCreated, code: 200 });
             });
          })
+    });
+}
+
+// Saber si ha registrado algo en 24 Horas el cliente.
+public async consultaRegistros(idCliente: string, fecha: Date): Promise<IResponse>{
+    return new Promise(( resolve, reject ) =>{   
+        if( !idCliente ) {
+            logger.error('No se localizaron registros.');
+            return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
+        }             
+        /*Porciones.find({idCliente, 
+            fecha: {"$lte": fecha.getDay()-1},
+            fecha: {"$gte": fecha}
+        }).exec((err,porcionessLocated) => {
+            if( err ){
+                logger.error ( err );
+                return reject({ ok: false, message: 'Error ', response: null, code: 500 });                
+            }
+            logger.info('Se localizaron registros.');
+            return resolve({ ok: true, message: 'Se localizaron registros.', response: porcionessLocated, code: 200 });
+        });*/
     });
 }
 

@@ -3,10 +3,12 @@ export default interface IUser {
     name?: string
     lasname?: string
     cellphone?: string
-    password?: string
+    password: string
+    salt: string
     email?: string
     role?: string
     addres?: string
     descripction?:string
     vigente?:Boolean
+    createdDate?: Date
 }

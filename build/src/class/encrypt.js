@@ -30,8 +30,7 @@ class EncryptClass {
             passwordHash
         };
     }
-    genPassword(password) {
-        const salt = this.genRandomString(16);
+    genPassword(password, salt) {
         return this.sha512(String(password), salt);
     }
     genResetPasswordToken(userId) {
@@ -41,19 +40,21 @@ class EncryptClass {
         ciphered += cipher.final(config_1.default.get("crypto.auth_outputEncoding"));
         return ciphered;
     }
-    genToken(usuario, callback) {
-        const payload = {
-            usuario
-        };
-        jsonwebtoken_1.default.sign(payload, config_1.default.get("jwt.accessTokenSecret"), {
-            expiresIn: config_1.default.get("jwt.accessTokenLife")
-        }, (err, token) => {
-            if (err) {
-                return callback(err);
-            }
-            else {
-                return callback(token);
-            }
+    genToken(usuario) {
+        return new Promise((resolve, reject) => {
+            const payload = {
+                usuario
+            };
+            jsonwebtoken_1.default.sign(payload, config_1.default.get("jwt.accessTokenSecret"), {
+                expiresIn: config_1.default.get("jwt.accessTokenLife")
+            }, (err, token) => {
+                if (err) {
+                    return reject(err);
+                }
+                else {
+                    return resolve(token);
+                }
+            });
         });
     }
     tokenEmail(usuario, callback) {
@@ -71,8 +72,7 @@ class EncryptClass {
             }
         });
     }
-    saltHashPassword(password) {
-        const salt = this.genRandomString(16);
+    saltHashPassword(password, salt) {
         return this.sha512(String(password), salt);
     }
 }

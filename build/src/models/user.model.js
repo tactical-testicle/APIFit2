@@ -35,6 +35,8 @@ const userSchema = new mongoose_1.Schema({
     role: { type: String, enum: rolesPermitidos },
     address: { type: String, required: true },
     descripction: { type: String },
-    vigente: { type: Boolean, required: true }
+    vigente: { type: Boolean, required: true },
+    salt: { type: String },
+    createdDate: { type: Date, default: Date.now() }
 }, { collection: 'users' });
 exports.default = mongoose_1.default.model('User', userSchema);

@@ -12,7 +12,9 @@ const userSchema: Schema = new Schema({
      role: {type: String,  enum: rolesPermitidos},
      address: {type: String, required: true },
      descripction:{type: String },
-     vigente: {type: Boolean, required: true}     
+     vigente: {type: Boolean, required: true},
+     salt: {type: String},
+     createdDate:{type: Date, default: Date.now()}      
 }, { collection: 'users'})
 
 export default mongoose.model('User', userSchema)

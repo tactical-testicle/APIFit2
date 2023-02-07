@@ -50,8 +50,8 @@ class CompromisoController {
                         logger_1.default.error(err);
                         return reject({ ok: false, message: 'Error ', response: null, code: 500 });
                     }
-                    logger_1.default.info('Compromiso localizado exitosamente.');
-                    return resolve({ ok: true, message: 'Compromiso localizadas', response: compromisoLocated, code: 200 });
+                    logger_1.default.info('Mejor compromiso localizado exitosamente.');
+                    return resolve({ ok: true, message: 'Mejor compromiso localizado', response: compromisoLocated, code: 200 });
                 }).sort({ duracion: -1 });
             });
         });
@@ -108,6 +108,28 @@ class CompromisoController {
                         return resolve({ ok: true, message: 'Comprimiso created', response: compromisoCreated, code: 200 });
                     });
                 });
+            });
+        });
+    }
+    // Saber si ha registrado algo en 24 Horas el cliente.
+    consultaRegistros(idCliente, fecha) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                if (!idCliente) {
+                    logger_1.default.error('No se localizaron registros.');
+                    return reject({ ok: false, message: "Incorrect data", response: null, code: 400 });
+                }
+                /*Porciones.find({idCliente,
+                    fecha: {"$lte": fecha.getDay()-1},
+                    fecha: {"$gte": fecha}
+                }).exec((err,porcionessLocated) => {
+                    if( err ){
+                        logger.error ( err );
+                        return reject({ ok: false, message: 'Error ', response: null, code: 500 });
+                    }
+                    logger.info('Se localizaron registros.');
+                    return resolve({ ok: true, message: 'Se localizaron registros.', response: porcionessLocated, code: 200 });
+                });*/
             });
         });
     }

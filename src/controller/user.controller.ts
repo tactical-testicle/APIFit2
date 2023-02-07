@@ -5,11 +5,12 @@ import IResponse from '../interfaces/response.interface';
 import IUser from '../interfaces/user.interface';
 /////////////////////////////////////////
 //////////////////////////////Modelos
-import User from '../models/user.model'
-
+import User from '../models/user.model';
+import EncryptClass from "../class/encrypt";
 /////////////////////////////////////////
 
 export default class UserController {
+    encrypt = new EncryptClass
 ///////////////////////////////////////////GETS////////////////////////////////////
 ////////////////////////////////////////// Consultar Usuarios general/////////////////////////
 public async consultaUsers (): Promise<IResponse>{
@@ -102,5 +103,40 @@ public async consultaUsers (): Promise<IResponse>{
             })
         });
     }
+
+    // LOGIN
+    loginAdministrator( email: string, password: string ): Promise<any> {
+        console.log("loginAdministrator: "+email+" : "+password);
+        return new Promise((resolve, reject) => {
+            User.findOne({ email: email }, async ( err: any, adminDB: any ) => {
+                if ( err ) {
+                    logger.error(err)
+                    return reject({ ok: false, message: 'Error en base de datos', response: err, code: 500 })
+                }
+
+                if ( !adminDB ) {
+                    return reject({ ok: false, message: 'Datos incorrectos', response: 'No existe un usuario con este email', code: 404 })
+                }
+                console.log("adminDB.salt: "+ adminDB.salt );
+                const { passwordHash } = this.encrypt.saltHashPassword( password, adminDB.salt )
+                console.log(passwordHash +" : "+adminDB.password);
+                if ( passwordHash === adminDB.password ) {
+                    adminDB.salt = null
+                    adminDB.password = null
+
+                    try {
+                        const token = await this.encrypt.genToken(adminDB)
+                        return resolve({ ok: true, message: 'Usuario logueado con exito', response: null, token: token, code: 200 })
+                    } catch( err ) {
+                        return reject({ ok: false, message: 'Ocurrion un error al generar token', response: err, code: 500 })
+                    }
+                } else {
+                    return reject({ ok: false, message: 'Ocurrio un error', response: 'Password incorrecto', code: 401 })
+                }
+
+            })
+        })
+    }
+
 };
 

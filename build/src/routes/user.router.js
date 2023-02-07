@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const encrypt_1 = __importDefault(require("../class/encrypt"));
 const logger_1 = __importDefault(require("../../lib/logger"));
 //////////////////////////////////////////////
 //////////////////////////////////Controllers
@@ -43,6 +44,16 @@ UserRoutes.get('/user/ping', (req, res) => __awaiter(void 0, void 0, void 0, fun
     logger_1.default.info('ping received');
     res.status(200).json('/pong');
 }));
+UserRoutes.post('/admin/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, password } = req.body;
+    try {
+        const response = yield userService.loginAdministrator(email, password);
+        return res.status(response.code).json(response);
+    }
+    catch (err) {
+        return res.status(err.code ? err.code : 500);
+    }
+}));
 UserRoutes.get('/consultaUsers', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let id = req.params.id;
     try {
@@ -67,7 +78,9 @@ UserRoutes.get('/locatedId/:id', (req, res) => __awaiter(void 0, void 0, void 0,
 ///////////////////////////////CREAR USUARIO
 UserRoutes.post('/createUser', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userBody = req.body;
+    const encrypt = new encrypt_1.default;
     try {
+        userBody.password = encrypt.genPassword(userBody.password.toString(), userBody.salt.toString()).passwordHash;
         const response = yield userService.createUser(userBody);
         return res.status(response.code).json(response);
     }
